@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="style.css" rel="stylesheet" type="text/css">
+
+    <title>Pomodoro Timer</title>
+  </head>
+  <body>
+    <div class="options-container">
+      <a class="close"></a>
+      <div class="color-group color-group-1"></div>
+      <div class="color-group color-group-2"></div>
+      <div class="color-group color-group-3"></div>
+      <div class="color-group color-group-4"></div>
+      <div class="color-group color-group-5"></div>
+    </div>
+    <div class="container">
+      <i class="options fa fa-gear fa-2x" aria-hidden="true"></i>
+      <div class="timer-container">
+        <p class="time-display">25:00</p>
+        <div class="timer-controls">
+          <div class="work-timer">
+            <p>Work Time</p>
+            <p><a class="modifier">-</a><span>25 mins</span><a class="modifier">+</a></p>
+          </div>
+          <div class="rest-timer" id="rest-timer">
+            <p>Rest Time</p>
+            <p><a class="modifier">-</a><span>5 mins</span><a class="modifier">+</a></p>
+          </div>
+        </div>
+        <a class="toggle-timer">Start</a>
+      </div>
+    </div>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans+Mono')
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+
+body
+  position: relative
+  margin: 0
+  height: 100%
+  width: 100%
+  overflow: hidden
+  selectable: none
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  cursor: default
+
+$closeSize : 30px
+.close
+  @extend .button
+  display: block
+  width: $closeSize
+  height: $closeSize
+  position: relative
+  transform: rotate(-45deg)
+  margin: 7px auto
+  &:before, &:after 
+    position: absolute
+    left: $closeSize/2
+    content: ' '
+    height: $closeSize
+    width: 2px
+    background-color: black
+  &:after
+    transform: rotate(-90deg)
+
+.options-container
+  display: none
+  position: absolute
+  z-index: 200
+  top: 0
+  right: 0
+  width: 80px
+  height: 400px
+  background: white
+  border-left: 2px solid black
+  border-bottom: 2px solid black
+
+
+.color-group-1
+  @extend .button
+  display: block
+  height: 0
+  width: 0
+  margin: 10px
+  border: white solid 30px
+  border-right-color: black
+  border-bottom-color: black
+  box-shadow: 0 0 1px 1px black
+
+=colorGroup($color1,$color2)
+  @extend .color-group-1
+  border-left-color: $color1
+  border-top-color: $color1
+  border-bottom-color: $color2
+  border-right-color: $color2
+
+.color-group-2
+  +colorGroup(orange, brown)
+
+.color-group-3
+  +colorGroup(gray, turquoise)
+
+.color-group-4
+  +colorGroup(olive, pink)
+
+.color-group-5
+  +colorGroup(red, beige)
+
+.static-container
+  height: 100vh
+  width: 100vw
+  overflow: hidden
+  position: absolute
+  color: brown
+  background: orange
+  border: 0px solid brown
+
+.container
+  @extend .static-container
+  z-index: 100
+  height: 0vh
+  animation: scroll 8s infinite linear
+  color: orange
+  background: brown
+  border: 0px solid orange
+
+.button
+  cursor: pointer
+  &:hover
+    box-shadow: 0 0 20px
+  &:active
+    opacity: 0.5
+
+.options
+  @extend .button
+  position: absolute
+  top: 10px
+  right: 15px
+
+.timer-container
+  position: absolute
+  top: 50vh
+  left: 50vw
+  font-size: 1.5em
+  transform: translate(-50%,-50%)
+  font-family: 'Droid Sans Mono', monospace
+  border-color: inherit
+  p
+    margin: 0
+
+.time-display
+  text-align: center
+  font-size: 5.5em
+
+.timer-controls
+  margin-bottom: 4em
+
+.work-timer, .rest-timer
+  float: left
+  width: 50%
+  text-align: center
+  .modifier
+    @extend .button
+    display: inline-block
+    width: 15%
+  span
+    display: inline-block
+    width: 58%
+
+.toggle-timer
+  @extend .button
+  display: block
+  margin: 1em auto 0
+  padding: 0.25em 0.5em
+  width: 100px
+  clear: both
+  text-align: center
+  border-color: inherit
+  border-width: 2px
+  border-style: solid
