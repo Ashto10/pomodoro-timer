@@ -1,29 +1,41 @@
 <template>
 <div id="app">
+  <div class="background">
   <Countdown :inverted="true"
              :current-count="currentCount"
              :timers="timers"
              :timerActive="timerActive"
              @toggleTimer="toggleTimer"></Countdown>
+  </div>
+  <div class="background inverted"
+       :style="{height: invertedHeight}">
   <Countdown :current-count="currentCount"
            :timers="timers"
            :timerActive="timerActive"
            @toggleTimer="toggleTimer"></Countdown>
+  </div>
 </div>
 </template>
 
 <style lang="sass">
+body
+  margin: 0
+
 .background
-  background: red
+  position: absolute
+  width: 100%
+  height: 100%
+  background: orange
+  overflow: hidden
 
 .background.inverted
-  background: green
-  top: 50%
+  top: 0
+  background: brown
 
 .default, .default button
-  color: green
+  color: brown
 .inverted, .inverted button
-  color: red
+  color: orange
 </style>
 
 <script>
@@ -62,6 +74,7 @@ export default {
         this.startCountdown()
       } else {
         this.displayTimerMessage = false
+        this.current = 0
         clearTimeout(this.timeout)
       }
     },
@@ -74,8 +87,8 @@ export default {
       if (this.timerActive) {
         this.seconds--
         if (this.seconds <= 0) {
-          this.current = this.current < this.timers.length - 1 ? this.current + 1 : 0
           this.displayTimerMessage = true
+          this.current = this.current < this.timers.length - 1 ? this.current + 1 : 0
           this.timeout = setTimeout(this.startCountdown, 5000)
         } else {
           this.timeout = setTimeout(this.tick, 1000)
@@ -90,6 +103,19 @@ export default {
       }
       let t = this.timerActive ? this.seconds : this.timers[this.current].max
       return Math.floor(t / 60) + ':' + `${t % 60}`.padStart(2, '0')
+    },
+    invertedHeight () {
+      if (!this.timerActive) {
+        return '0%'
+      }
+      if (this.displayTimerMessage) {
+        return `${this.current % 2 === 0 ? 0 : 100}%`
+      }
+      let perc = this.seconds * 100 / this.timers[this.current].max
+      if (this.current % 2 === 0) {
+        perc = 100 - perc
+      }
+      return `${perc}%`
     }
   }
 }
