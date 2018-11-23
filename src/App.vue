@@ -1,62 +1,38 @@
 <template>
 <div id="app">
-  <div class="countdown-display">{{ timeDisplay }}</div>
-  <section v-if="!timerActive" class="timer-container">
-    <Timer v-for="(timer, index) in timers"
-           :key="index"
-           :timer-type="timer.type"
-           v-model="timer.max"></Timer>
-  </section>
-  <button class="toggle-countdown-button" @click="toggleTimer">{{ timerActive ? 'stop' : 'start' }}</button>
+  <Countdown :inverted="true"
+             :current-count="currentCount"
+             :timers="timers"
+             :timerActive="timerActive"
+             @toggleTimer="toggleTimer"></Countdown>
+  <Countdown :current-count="currentCount"
+           :timers="timers"
+           :timerActive="timerActive"
+           @toggleTimer="toggleTimer"></Countdown>
 </div>
 </template>
 
 <style lang="sass">
-button
-  background: none
-  border: none
-  padding: 0
-  line-height: 1em
-  &:hover
-    border-style: solid
-#app
-  font-size: 24px
-  text-align: center
-  position: absolute
-  left: 50%
+.background
+  background: red
+
+.background.inverted
+  background: green
   top: 50%
-  width: 80%
-  max-width: 960px
-  transform: translate(-50%, -50%)
-  font-family: 'Droid Sans Mono', sans-serif
-  text-transform: lowercase
 
-.countdown-display
-  display: flex
-  justify-content: center
-  align-items: flex-end
-  margin-bottom: 0.5em
-  font-size: 2em
-
-.timer-container
-  display: flex
-  flex-wrap: wrap
-  justify-content: center
-
-.toggle-countdown-button
-  font-size: 1.25em
-  height: 2em
-  margin-top: 0.25em
-  padding: 0 0.7em
+.default, .default button
+  color: green
+.inverted, .inverted button
+  color: red
 </style>
 
 <script>
-import Timer from './components/Timer.vue'
+import Countdown from './components/Countdown.vue'
 
 export default {
   name: 'app',
   components: {
-    Timer
+    Countdown
   },
   data () {
     return {
@@ -86,7 +62,7 @@ export default {
         this.startCountdown()
       } else {
         this.displayTimerMessage = false
-        clearTimeout(this.interval)
+        clearTimeout(this.timeout)
       }
     },
     startCountdown () {
@@ -100,15 +76,15 @@ export default {
         if (this.seconds <= 0) {
           this.current = this.current < this.timers.length - 1 ? this.current + 1 : 0
           this.displayTimerMessage = true
-          this.interval = setTimeout(this.startCountdown, 5000)
+          this.timeout = setTimeout(this.startCountdown, 5000)
         } else {
-          this.interval = setTimeout(this.tick, 1000)
+          this.timeout = setTimeout(this.tick, 1000)
         }
       }
     }
   },
   computed: {
-    timeDisplay () {
+    currentCount () {
       if (this.displayTimerMessage) {
         return this.timers[this.current].startMessage
       }

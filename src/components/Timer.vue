@@ -27,11 +27,11 @@
 
 <script>
 export default {
+  name: 'Timer',
   model: {
     prop: 'seconds',
     event: 'change'
   },
-  name: 'Timer',
   props: {
     timerType: {
       type: String
