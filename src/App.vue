@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-  <div class="background">
+  <div class="background default">
   <Countdown :inverted="true"
              :current-count="currentCount"
              :timers="timers"
@@ -27,15 +27,37 @@ body
   height: 100%
   background: orange
   overflow: hidden
+  transition: height 0.99s linear
 
+$borderHeight: 10px
+  
 .background.inverted
   top: 0
   background: brown
+  &::after
+    position: absolute
+    content: ''
+    display: block
+    bottom: 0
+    height: $borderHeight
+    left: 0
+    right: 0
+    background: radial-gradient(closest-side, transparent, transparent 50%, orange 50%)
+    background-size: ($borderHeight / 2) ($borderHeight * 1.75)
+    background-position: $borderHeight (-$borderHeight * 0.8)
+    background-repeat: repeat-x
+    animation: water-flow 0.3s linear infinite
+    left: -$borderHeight
+  
+@keyframes water-flow
+  to
+    transform: translateX($borderHeight)
 
 .default, .default button
   color: brown
 .inverted, .inverted button
   color: orange
+  
 </style>
 
 <script>
@@ -52,7 +74,7 @@ export default {
         {
           type: 'Work',
           max: 1500,
-          startMessage: 'Back to the grind!'
+          startMessage: 'Back to work!'
         },
         {
           type: 'Rest',
@@ -106,7 +128,7 @@ export default {
     },
     invertedHeight () {
       if (!this.timerActive) {
-        return '0%'
+        return '0'
       }
       if (this.displayTimerMessage) {
         return `${this.current % 2 === 0 ? 0 : 100}%`
